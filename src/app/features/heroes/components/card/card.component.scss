@@ -1,0 +1,40 @@
+.card {
+  border: 1px solid #dfe1e5;
+  border-radius: 5px;
+  background: #ffffff;
+  width: 300px;
+  cursor: pointer;
+
+  &__header {
+    height: 70px;
+    border-bottom: 1px solid #dfe1e5;
+    position: relative;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    color: #bebec8;
+  }
+
+  &__image {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    transform: translateY(50%);
+  }
+
+  &__content {
+    padding: 40px 20px;
+
+    h4 {
+      color: #bebec8;
+      margin: 10px 0;
+    }
+    h3 {
+      margin: 10px 0;
+    }
+    p {
+      color: #b3b3be;
+    }
+  }
+}

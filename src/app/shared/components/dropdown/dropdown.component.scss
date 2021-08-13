@@ -1,0 +1,35 @@
+.dropdown {
+  width: 200px;
+  display: block;
+  position: relative;
+
+  &__selected {
+    background: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__icon {
+    transform: rotateZ(90deg);
+    cursor: pointer;
+  }
+
+  &__options {
+    position: absolute;
+    height: 300px;
+    max-height: 400px;
+    width: 100%;
+    overflow-y: auto;
+    z-index: 1;
+  }
+
+  &__option {
+    background: #fff;
+    padding: 10px 20px;
+
+    &:hover {
+      background: burlywood;
+    }
+  }
+}

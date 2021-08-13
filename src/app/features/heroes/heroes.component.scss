@@ -1,0 +1,26 @@
+.heroes {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    & > *:not(:nth-child(4n)) {
+      margin-right: 20px;
+      margin-bottom: 20px;
+    }
+  }
+
+  &__form {
+    display: flex;
+    margin-bottom: 20px;
+    & > *:not(:last-child) {
+      margin-right: 20px;
+    }
+
+    input {
+      border: transparent;
+      padding: 10px 20px;
+      &:focus {
+        outline: 1px solid burlywood;
+      }
+    }
+  }
+}
