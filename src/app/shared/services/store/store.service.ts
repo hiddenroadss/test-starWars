@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { SingleSpecies } from '@interfaces/SingleSpecies.interface';
-import { StarShip } from '@interfaces/StarShip.interface';
+import { Species } from '@interfaces/Species';
+import { StarShip } from '@interfaces/StarShip';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Hero } from '@interfaces/Hero.interface';
-import { Movie } from '@interfaces/Movie.interface';
+import { Hero } from '@interfaces/Hero';
+import { Movie } from '@interfaces/Movie';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ import { Movie } from '@interfaces/Movie.interface';
 export class StoreService {
   private heroes$ = new BehaviorSubject<Hero[] | null>(null);
   private movies$ = new BehaviorSubject<Movie[] | null>(null);
-  private species$ = new BehaviorSubject<SingleSpecies[] | null>(null);
+  private species$ = new BehaviorSubject<Species[] | null>(null);
   private starShips$ = new BehaviorSubject<StarShip[] | null>(null);
 
   constructor() {}
@@ -24,7 +24,7 @@ export class StoreService {
     return this.movies$.asObservable();
   }
 
-  getSpecies(): Observable<SingleSpecies[] | null> {
+  getSpecies(): Observable<Species[] | null> {
     return this.species$.asObservable();
   }
 
@@ -44,7 +44,7 @@ export class StoreService {
     this.movies$.next(movies);
   }
 
-  setSpecies(species: SingleSpecies[]): void {
+  setSpecies(species: Species[]): void {
     if (this.species$.value) {
       this.species$.next([...this.species$.value, ...species]);
     } else {

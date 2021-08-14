@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Hero } from 'src/app/shared/interfaces/Hero.interface';
+import { Hero } from '@interfaces/Hero';
 import { Router } from '@angular/router';
-import { Movie } from 'src/app/shared/interfaces/Movie.interface';
+import { Movie } from 'src/app/shared/interfaces/Movie';
 import { StoreService } from 'src/app/shared/services/store/store.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { SingleSpecies } from '@interfaces/SingleSpecies.interface';
-import { StarShip } from '@interfaces/StarShip.interface';
+import { Species } from '@interfaces/Species';
+import { StarShip } from '@interfaces/StarShip';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -18,7 +18,7 @@ export class HeroesComponent implements OnInit {
   filteredHeroes: Hero[] = [];
   movies: Movie[] = [];
   moviesTitles: string[] = [];
-  species: SingleSpecies[] = [];
+  species: Species[] = [];
   speciesNames: string[] = [];
   starShips: StarShip[] = [];
   form: FormGroup;

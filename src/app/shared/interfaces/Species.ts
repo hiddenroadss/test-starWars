@@ -1,6 +1,6 @@
-import { UrlString } from './utils.interface';
+import { UrlString } from './utils';
 
-export interface SingleSpecies {
+export interface Species {
   name: string;
   classification: string;
   designation: string;

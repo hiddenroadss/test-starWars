@@ -1,5 +1,6 @@
-export interface ItemsListResponse {
+export interface ItemsListResponse<T> {
   count: number;
   next: string | null;
   previous: string | null;
+  results: T[];
 }

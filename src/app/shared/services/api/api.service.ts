@@ -1,41 +1,93 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Species } from '@interfaces/Species.interface';
-import { StarShips } from '@interfaces/StarShips.interface';
-import { Observable } from 'rxjs';
-import { Heroes } from '../../interfaces/Heroes.interface';
-import { Movies } from '../../interfaces/Movies.interface';
+import { Hero } from '@interfaces/Hero';
+import { ItemsListResponse } from '@interfaces/ItemsListResponse';
+import { Movie } from '@interfaces/Movie';
+import { Species } from '@interfaces/Species';
+import { StarShip } from '@interfaces/StarShip';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { concatMap, reduce, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
   private baseUrl = 'https://swapi.dev/api';
-  private imageBaseUrl = 'https://akabab.github.io/starwars-api/api';
+
+  heroes$ = new BehaviorSubject(1);
+  species$ = new BehaviorSubject(1);
+  starShips$ = new BehaviorSubject(1);
 
   constructor(private http: HttpClient) {}
 
-  getHeroes(page: string): Observable<Heroes> {
-    return this.http.get<Heroes>(`${this.baseUrl}/people`, {
+  getAllEntities<T>(
+    subject$: BehaviorSubject<number>,
+    method: (page: number) => Observable<ItemsListResponse<T>>
+  ): Observable<T[]> {
+    console.log(method, 'A');
+    return subject$.pipe(
+      concatMap((page) =>
+        method(page).pipe(
+          tap((value) => {
+            if (value.next) {
+              subject$.next(++page);
+            } else {
+              subject$.complete();
+            }
+          })
+        )
+      ),
+      reduce((acc: T[], currentValue) => acc.concat(currentValue.results), [])
+    );
+  }
+
+  getHeroes(): Observable<Hero[]> {
+    return this.getAllEntities(this.heroes$, this.getHeroesByPage);
+  }
+
+  getSpecies(): Observable<Species[]> {
+    return this.getAllEntities(this.species$, this.getSpeciesByPage);
+  }
+
+  getStarShips(): Observable<StarShip[]> {
+    return this.getAllEntities(this.starShips$, this.getStarShipsByPage);
+  }
+
+  private getHeroesByPage = (
+    page: number
+  ): Observable<ItemsListResponse<Hero>> => {
+    return this.http.get<ItemsListResponse<Hero>>(`${this.baseUrl}/people`, {
       params: {
-        page,
+        page: page.toString(),
       },
     });
-  }
+  };
 
-  getMovies(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.baseUrl}/films`);
-  }
-
-  getSpecies(page: string): Observable<Species> {
-    return this.http.get<Species>(`${this.baseUrl}/species`, {
-      params: { page },
+  getMoviesByPage(page: number): Observable<ItemsListResponse<Movie>> {
+    return this.http.get<ItemsListResponse<Movie>>(`${this.baseUrl}/films`, {
+      params: { page: page.toString() },
     });
   }
 
-  getStarShips(page: string): Observable<StarShips> {
-    return this.http.get<StarShips>(`${this.baseUrl}/starships`, {
-      params: { page },
-    });
-  }
+  private getSpeciesByPage = (
+    page: number
+  ): Observable<ItemsListResponse<Species>> => {
+    return this.http.get<ItemsListResponse<Species>>(
+      `${this.baseUrl}/species`,
+      {
+        params: { page: page.toString() },
+      }
+    );
+  };
+
+  private getStarShipsByPage = (
+    page: number
+  ): Observable<ItemsListResponse<StarShip>> => {
+    return this.http.get<ItemsListResponse<StarShip>>(
+      `${this.baseUrl}/starships`,
+      {
+        params: { page: page.toString() },
+      }
+    );
+  };
 }

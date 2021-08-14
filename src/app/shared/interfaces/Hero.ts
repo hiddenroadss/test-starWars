@@ -1,4 +1,4 @@
-import { UrlString } from './utils.interface';
+import { UrlString } from './utils';
 
 export interface Hero {
   name: string;
