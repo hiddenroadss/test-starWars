@@ -1,3 +1,5 @@
+import { UrlString } from './utils.interface';
+
 export interface Movie {
   title: string;
   episode_id: number;
@@ -5,12 +7,12 @@ export interface Movie {
   director: string;
   producer: string;
   release_date: string;
-  characters: string[];
-  planets: string[];
-  starships: string[];
-  vehicles: string[];
-  species: string[];
+  characters: UrlString[];
+  planets: UrlString[];
+  starships: UrlString[];
+  vehicles: UrlString[];
+  species: UrlString[];
   created: string;
   edited: string;
-  url: string;
+  url: UrlString;
 }

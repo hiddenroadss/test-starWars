@@ -1,13 +1,25 @@
 <div class="container details__container" *ngIf="hero">
-  <h2>{{ hero.name }}</h2>
-  <p>
-    Species: <span *ngFor="let person of speciesNames">{{ person }} </span>
-  </p>
-  <p>
-    Movies: <span *ngFor="let movie of moviesNames">{{ movie }} </span>
-  </p>
-  <p>
-    Spaceships:
-    <span *ngFor="let starShip of starShipsNames">{{ starShip }} </span>
-  </p>
+  <div class="details__image">
+    <img
+      [src]="'assets/characters/' + (hero.url | retrieveId) + '.jpg'"
+      [alt]="hero.name"
+    />
+  </div>
+  <div class="details__description">
+    <div class="description__header">
+      <h2>{{ hero.name }}</h2>
+    </div>
+    <div class="description__info">
+      <p>
+        Species: <span *ngFor="let person of speciesNames">{{ person }} </span>
+      </p>
+      <p>
+        Movies: <span *ngFor="let movie of moviesNames">{{ movie }} </span>
+      </p>
+      <p>
+        Spaceships:
+        <span *ngFor="let starShip of starShipsNames">{{ starShip }} </span>
+      </p>
+    </div>
+  </div>
 </div>

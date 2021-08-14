@@ -1,3 +1,5 @@
+import { UrlString } from './utils.interface';
+
 export interface Hero {
   name: string;
   height: string;
@@ -8,11 +10,11 @@ export interface Hero {
   birth_year: string;
   gender: string;
   homeworld: string;
-  films: string[];
-  species: string[];
-  vehicles: string[];
-  starships: string[];
+  films: UrlString[];
+  species: UrlString[];
+  vehicles: UrlString[];
+  starships: UrlString[];
   created: string;
   edited: string;
-  url: string;
+  url: UrlString;
 }

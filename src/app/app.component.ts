@@ -10,7 +10,6 @@ import { StoreService } from './shared/services/store/store.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'StarWarsHeroes';
   heroesSubject$ = new Subject();
   speciesSubject$ = new Subject();
   starShipsSubject$ = new Subject();

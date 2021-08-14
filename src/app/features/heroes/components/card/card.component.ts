@@ -10,6 +10,7 @@ export class CardComponent implements OnInit {
   @Input() subtitle = '';
   @Input() description = '';
   @Input() headerInfo = '';
+  @Input() id = '';
 
   constructor() {}
 

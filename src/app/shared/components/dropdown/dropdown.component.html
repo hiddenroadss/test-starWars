@@ -1,5 +1,5 @@
-<div class="dropdown" *ngIf="options.length">
-  <div class="dropdown__selected" (click)="isOpened = !isOpened">
+<div class="dropdown" *ngIf="options.length" (click)="onDropdownClick($event)">
+  <div class="dropdown__selected">
     <div>{{ selectedValue ? selectedValue : "All" }}</div>
     <div
       class="dropdown__icon"
@@ -16,12 +16,14 @@
     >
       All
     </div>
-    <div
-      class="dropdown__option"
-      *ngFor="let option of options"
-      (click)="setSelectedValue(option)"
-    >
-      {{ option }}
-    </div>
+    <ng-container *ngFor="let option of options">
+      <div
+        class="dropdown__option"
+        *ngIf="option !== selectedValue"
+        (click)="setSelectedValue(option)"
+      >
+        {{ option }}
+      </div>
+    </ng-container>
   </div>
 </div>

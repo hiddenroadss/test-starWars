@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-dropdown',
@@ -23,7 +24,11 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
   isOpened = false;
   selectedValue = '';
 
-  constructor() {}
+  constructor() {
+    fromEvent(document, 'click').subscribe(() => {
+      this.isOpened = false;
+    });
+  }
 
   ngOnInit(): void {}
 
@@ -46,6 +51,10 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
     this.selectedValue = option;
     this.onChange(this.selectedValue);
     this.onTouch();
-    this.isOpened = false;
+  }
+
+  onDropdownClick(event: MouseEvent): void {
+    event.stopPropagation();
+    this.isOpened = !this.isOpened;
   }
 }

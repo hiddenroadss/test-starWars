@@ -1,3 +1,5 @@
+import { UrlString } from './utils.interface';
+
 export interface SingleSpecies {
   name: string;
   classification: string;
@@ -9,9 +11,9 @@ export interface SingleSpecies {
   average_lifespan: string;
   homeworld: string;
   language: string;
-  people: string[];
-  films: string[];
+  people: UrlString[];
+  films: UrlString[];
   created: string;
   edited: string;
-  url: string;
+  url: UrlString;
 }

@@ -11,6 +11,7 @@ import { Movies } from '../../interfaces/Movies.interface';
 })
 export class ApiService {
   private baseUrl = 'https://swapi.dev/api';
+  private imageBaseUrl = 'https://akabab.github.io/starwars-api/api';
 
   constructor(private http: HttpClient) {}
 

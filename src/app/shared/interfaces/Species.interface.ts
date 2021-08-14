@@ -1,8 +1,6 @@
+import { ItemsListResponse } from './ItemsListResponse.interface';
 import { SingleSpecies } from './SingleSpecies.interface';
 
-export interface Species {
-  count: number;
-  next: string | null;
-  previous: string | null;
+export interface Species extends ItemsListResponse {
   results: SingleSpecies[];
 }

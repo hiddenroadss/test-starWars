@@ -1,6 +1,24 @@
 .details {
   &__container {
+    display: flex;
+    justify-content: center;
     background: #fff;
     border-radius: 5px;
+    padding: 20px;
+  }
+
+  &__description {
+  }
+
+  &__image {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 3px 20px #dfe1e5;
+    img {
+      height: auto;
+      width: 100%;
+    }
   }
 }

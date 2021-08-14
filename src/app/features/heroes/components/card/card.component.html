@@ -2,9 +2,8 @@
   <div class="card__header">
     <img
       class="card__image"
-      src="assets/images/male-icon.png"
-      alt="Hero Gender"
-      style="border-radius: 50%; width: 100px"
+      [src]="'assets/characters/' + id + '.jpg'"
+      [alt]="title"
     />
     <span>{{ headerInfo }}</span>
   </div>

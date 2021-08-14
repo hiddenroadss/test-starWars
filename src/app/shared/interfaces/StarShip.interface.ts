@@ -1,3 +1,5 @@
+import { UrlString } from './utils.interface';
+
 export interface StarShip {
   name: string;
   model: string;
@@ -12,9 +14,9 @@ export interface StarShip {
   hyperdrive_rating: string;
   MGLT: string;
   starship_class: string;
-  pilots: string[];
-  films: string[];
+  pilots: UrlString[];
+  films: UrlString[];
   created: string;
   edited: string;
-  url: string;
+  url: UrlString;
 }

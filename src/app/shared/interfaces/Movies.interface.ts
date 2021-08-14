@@ -1,8 +1,6 @@
+import { ItemsListResponse } from './ItemsListResponse.interface';
 import { Movie } from './Movie.interface';
 
-export interface Movies {
-  count: number;
-  next: string | null;
-  previous: string | null;
+export interface Movies extends ItemsListResponse {
   results: Movie[];
 }

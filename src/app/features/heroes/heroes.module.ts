@@ -6,6 +6,7 @@ import { HeroesRoutingModule } from './heroes-routing.module';
 import { HeroesComponent } from './heroes.component';
 import { CardModule } from './components/card/card.module';
 import { DropdownModule } from '@components/dropdown/dropdown.module';
+import { RetrieveIdModule } from '@pipes/retrieve-id/retrieve-id.module';
 
 @NgModule({
   declarations: [HeroesComponent],
@@ -15,6 +16,7 @@ import { DropdownModule } from '@components/dropdown/dropdown.module';
     CardModule,
     DropdownModule,
     ReactiveFormsModule,
+    RetrieveIdModule,
   ],
 })
 export class HeroesModule {}
