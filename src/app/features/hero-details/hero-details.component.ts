@@ -9,12 +9,14 @@ import { StoreService } from '@services/store/store.service';
   styleUrls: ['./hero-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeroDetailsComponent {
+export class HeroDetailsComponent implements OnInit {
   hero!: Hero;
   speciesNames: string[] = [];
   moviesNames: string[] = [];
   starShipsNames: string[] = [];
-  constructor(private router: Router, private storeService: StoreService) {
+  constructor(private router: Router, private storeService: StoreService) {}
+
+  ngOnInit(): void {
     const currentRoot = this.router.getCurrentNavigation();
     if (!currentRoot || !currentRoot.extras.state) {
       this.router.navigate(['/']);
