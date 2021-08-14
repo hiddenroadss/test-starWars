@@ -4,19 +4,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { HeroesRoutingModule } from './heroes-routing.module';
 import { HeroesComponent } from './heroes.component';
-import { CardModule } from './components/card/card.module';
 import { DropdownModule } from '@components/dropdown/dropdown.module';
-import { RetrieveIdModule } from '@pipes/retrieve-id/retrieve-id.module';
+import { CardListModule } from './components/card-list/card-list.module';
 
 @NgModule({
   declarations: [HeroesComponent],
   imports: [
     CommonModule,
     HeroesRoutingModule,
-    CardModule,
     DropdownModule,
     ReactiveFormsModule,
-    RetrieveIdModule,
+    CardListModule,
   ],
 })
 export class HeroesModule {}

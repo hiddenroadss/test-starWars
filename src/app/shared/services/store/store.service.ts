@@ -14,8 +14,6 @@ export class StoreService {
   private species$ = new BehaviorSubject<Species[] | null>(null);
   private starShips$ = new BehaviorSubject<StarShip[] | null>(null);
 
-  constructor() {}
-
   getHeroes(): Observable<Hero[] | null> {
     return this.heroes$.asObservable();
   }

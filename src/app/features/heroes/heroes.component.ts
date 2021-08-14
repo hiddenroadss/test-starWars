@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Hero } from '@interfaces/Hero';
 import { Router } from '@angular/router';
 import { Movie } from 'src/app/shared/interfaces/Movie';
@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-heroes',
   templateUrl: './heroes.component.html',
   styleUrls: ['./heroes.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroesComponent implements OnInit {
   heroes: Hero[] = [];

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Hero } from '@interfaces/Hero';
 import { StoreService } from '@services/store/store.service';
@@ -7,8 +7,9 @@ import { StoreService } from '@services/store/store.service';
   selector: 'app-hero-details',
   templateUrl: './hero-details.component.html',
   styleUrls: ['./hero-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeroDetailsComponent implements OnInit {
+export class HeroDetailsComponent {
   hero!: Hero;
   speciesNames: string[] = [];
   moviesNames: string[] = [];
@@ -24,6 +25,4 @@ export class HeroDetailsComponent implements OnInit {
       this.starShipsNames = currentRoot.extras.state.starShipsNames;
     }
   }
-
-  ngOnInit(): void {}
 }

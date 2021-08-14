@@ -1,13 +1,4 @@
 .heroes {
-  &__list {
-    display: flex;
-    flex-wrap: wrap;
-    & > *:not(:nth-child(4n)) {
-      margin-right: 20px;
-      margin-bottom: 20px;
-    }
-  }
-
   &__form {
     display: flex;
     margin-bottom: 20px;

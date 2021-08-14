@@ -25,18 +25,7 @@
         </div>
       </form>
     </div>
-    <div class="heroes__list">
-      <ng-container *ngFor="let hero of filteredHeroes">
-        <app-card
-          [title]="hero.name"
-          [subtitle]="hero.birth_year"
-          [description]="hero.hair_color"
-          [headerInfo]="hero.gender"
-          [id]="hero.url | retrieveId"
-          (click)="showHeroDetails(hero)"
-        ></app-card>
-      </ng-container>
-    </div>
+    <app-card-list [items]="filteredHeroes"></app-card-list>
   </ng-container>
   <ng-template #spinner><div>AAA</div></ng-template>
 </div>
