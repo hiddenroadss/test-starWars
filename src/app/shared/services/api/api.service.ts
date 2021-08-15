@@ -17,6 +17,7 @@ export class ApiService {
   heroes$ = new BehaviorSubject(1);
   species$ = new BehaviorSubject(1);
   starShips$ = new BehaviorSubject(1);
+  movies$ = new BehaviorSubject(1);
 
   constructor(private http: HttpClient) {}
 
@@ -24,7 +25,6 @@ export class ApiService {
     subject$: BehaviorSubject<number>,
     method: (page: number) => Observable<ItemsListResponse<T>>
   ): Observable<T[]> {
-    console.log(method, 'A');
     return subject$.pipe(
       concatMap((page) =>
         method(page).pipe(
@@ -42,15 +42,22 @@ export class ApiService {
   }
 
   getHeroes(): Observable<Hero[]> {
-    return this.getAllEntities(this.heroes$, this.getHeroesByPage);
+    return this.getAllEntities<Hero>(this.heroes$, this.getHeroesByPage);
   }
 
   getSpecies(): Observable<Species[]> {
-    return this.getAllEntities(this.species$, this.getSpeciesByPage);
+    return this.getAllEntities<Species>(this.species$, this.getSpeciesByPage);
   }
 
   getStarShips(): Observable<StarShip[]> {
-    return this.getAllEntities(this.starShips$, this.getStarShipsByPage);
+    return this.getAllEntities<StarShip>(
+      this.starShips$,
+      this.getStarShipsByPage
+    );
+  }
+
+  getMovies(): Observable<Movie[]> {
+    return this.getAllEntities<Movie>(this.movies$, this.getMoviesByPage);
   }
 
   private getHeroesByPage = (
@@ -63,11 +70,13 @@ export class ApiService {
     });
   };
 
-  getMoviesByPage(page: number): Observable<ItemsListResponse<Movie>> {
+  private getMoviesByPage = (
+    page: number
+  ): Observable<ItemsListResponse<Movie>> => {
     return this.http.get<ItemsListResponse<Movie>>(`${this.baseUrl}/films`, {
       params: { page: page.toString() },
     });
-  }
+  };
 
   private getSpeciesByPage = (
     page: number

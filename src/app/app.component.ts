@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, zip } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { ApiService } from './shared/services/api/api.service';
 import { StoreService } from './shared/services/store/store.service';
 
@@ -9,32 +10,25 @@ import { StoreService } from './shared/services/store/store.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  subscription: Subscription;
+  data$: Observable<any>;
+  loading = true;
 
   constructor(
     private apiService: ApiService,
     private storeService: StoreService
   ) {
-    this.apiService.getHeroes().subscribe((heroes) => {
-      this.storeService.setHeroes(heroes);
-    });
-    this.apiService.getSpecies().subscribe((heroes) => {
-      this.storeService.setSpecies(heroes);
-    });
-    this.apiService.getStarShips().subscribe((heroes) => {
-      this.storeService.setStarShips(heroes);
-    });
-
-    this.subscription = this.apiService
-      .getMoviesByPage(1)
-      .subscribe((value) => {
-        this.storeService.setMovies(value.results);
-      });
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.data$ = zip(
+      this.apiService.getHeroes(),
+      this.apiService.getSpecies(),
+      this.apiService.getStarShips(),
+      this.apiService.getMovies()
+    ).pipe(
+      tap((value) => {
+        this.storeService.setHeroes(value[0]);
+        this.storeService.setSpecies(value[1]);
+        this.storeService.setStarShips(value[2]);
+        this.storeService.setMovies(value[3]);
+      })
+    );
   }
 }

@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Hero } from '@interfaces/Hero';
 import { Router } from '@angular/router';
 import { Movie } from 'src/app/shared/interfaces/Movie';
@@ -32,7 +37,8 @@ export class HeroesComponent implements OnInit {
   constructor(
     private router: Router,
     private storeService: StoreService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cd: ChangeDetectorRef
   ) {
     this.form = this.fb.group({
       movie: [''],
@@ -41,29 +47,22 @@ export class HeroesComponent implements OnInit {
       to: [''],
     });
     this.subscription1 = this.storeService.getSpecies().subscribe((value) => {
-      if (value) {
-        this.species = value;
-        this.speciesNames = this.species.map((item) => item.name);
-      }
+      this.species = value;
+      this.speciesNames = this.species.map((item) => item.name);
     });
     this.subscription2 = this.storeService.getHeroes().subscribe((value) => {
-      if (value) {
-        this.heroes = value;
-        this.filteredHeroes = value;
-      }
+      this.heroes = value;
+      this.filteredHeroes = value;
+      this.cd.markForCheck();
     });
     this.subscription3 = this.storeService.getMovies().subscribe((value) => {
-      if (value) {
-        this.movies = value;
-        this.moviesTitles = this.movies.map((item) => {
-          return item.title;
-        });
-      }
+      this.movies = value;
+      this.moviesTitles = this.movies.map((item) => {
+        return item.title;
+      });
     });
     this.subscription4 = this.storeService.getStarShips().subscribe((value) => {
-      if (value) {
-        this.starShips = value;
-      }
+      this.starShips = value;
     });
   }
 
@@ -127,7 +126,7 @@ export class HeroesComponent implements OnInit {
     return this.form.controls.species as FormControl;
   }
 
-  showHeroDetails(hero: Hero): void {
+  showHeroDetails = (hero: Hero): void => {
     const speciesNames = this.species
       .filter((item) => hero.species.includes(item.url))
       .map((item) => item.name);
@@ -140,5 +139,5 @@ export class HeroesComponent implements OnInit {
     this.router.navigate([hero.name.replace(/\s/, '')], {
       state: { hero, speciesNames, moviesNames, starShipsNames },
     });
-  }
+  };
 }

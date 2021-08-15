@@ -14,9 +14,7 @@ export class HeroDetailsComponent implements OnInit {
   speciesNames: string[] = [];
   moviesNames: string[] = [];
   starShipsNames: string[] = [];
-  constructor(private router: Router, private storeService: StoreService) {}
-
-  ngOnInit(): void {
+  constructor(private router: Router, private storeService: StoreService) {
     const currentRoot = this.router.getCurrentNavigation();
     if (!currentRoot || !currentRoot.extras.state) {
       this.router.navigate(['/']);
@@ -27,4 +25,6 @@ export class HeroDetailsComponent implements OnInit {
       this.starShipsNames = currentRoot.extras.state.starShipsNames;
     }
   }
+
+  ngOnInit(): void {}
 }

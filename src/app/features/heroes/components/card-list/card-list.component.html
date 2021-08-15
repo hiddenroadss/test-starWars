@@ -6,6 +6,7 @@
       [description]="hero.hair_color"
       [headerInfo]="hero.gender"
       [id]="hero.url | retrieveId"
+      (click)="onItemClick(hero)"
     ></app-card>
   </ng-container>
 </div>

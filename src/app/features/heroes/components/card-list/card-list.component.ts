@@ -9,4 +9,5 @@ import { Hero } from '@interfaces/Hero';
 })
 export class CardListComponent {
   @Input() items: Hero[] = [];
+  @Input() onItemClick!: (hero: Hero) => void;
 }

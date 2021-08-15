@@ -1,6 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Observable } from 'rxjs';
+import { startWith, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dropdown',
@@ -13,9 +19,11 @@ import { fromEvent } from 'rxjs';
       multi: true,
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropdownComponent implements OnInit, ControlValueAccessor {
   @Input() options: string[] = [];
+  outsideClick$: Observable<Event>;
 
   onChange!: (selected: string) => void;
   onTouch!: () => void;
@@ -25,9 +33,10 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
   selectedValue = '';
 
   constructor() {
-    fromEvent(document, 'click').subscribe(() => {
-      this.isOpened = false;
-    });
+    this.outsideClick$ = fromEvent(document, 'click').pipe(
+      startWith(new Event('click')),
+      tap(() => (this.isOpened = false))
+    );
   }
 
   ngOnInit(): void {}

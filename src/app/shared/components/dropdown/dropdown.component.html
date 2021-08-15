@@ -1,4 +1,8 @@
-<div class="dropdown" *ngIf="options.length" (click)="onDropdownClick($event)">
+<div
+  class="dropdown"
+  *ngIf="outsideClick$ | async"
+  (click)="onDropdownClick($event)"
+>
   <div class="dropdown__selected">
     <div>{{ selectedValue ? selectedValue : "All" }}</div>
     <div

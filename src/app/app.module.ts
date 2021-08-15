@@ -6,10 +6,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderModule } from 'src/app/core/components/header/header.module';
 import { NotificationService } from '@services/notification/notification.service';
+import { LoaderModule } from './core/components/loader/loader.module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, HeaderModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    HeaderModule,
+    LoaderModule,
+  ],
   providers: [{ provide: NotificationService, useClass: NotificationService }],
   bootstrap: [AppComponent],
 })

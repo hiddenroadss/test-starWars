@@ -9,33 +9,29 @@ import { Movie } from '@interfaces/Movie';
   providedIn: 'root',
 })
 export class StoreService {
-  private heroes$ = new BehaviorSubject<Hero[] | null>(null);
-  private movies$ = new BehaviorSubject<Movie[] | null>(null);
-  private species$ = new BehaviorSubject<Species[] | null>(null);
-  private starShips$ = new BehaviorSubject<StarShip[] | null>(null);
+  private heroes$ = new BehaviorSubject<Hero[]>([]);
+  private movies$ = new BehaviorSubject<Movie[]>([]);
+  private species$ = new BehaviorSubject<Species[]>([]);
+  private starShips$ = new BehaviorSubject<StarShip[]>([]);
 
-  getHeroes(): Observable<Hero[] | null> {
+  getHeroes(): Observable<Hero[]> {
     return this.heroes$.asObservable();
   }
 
-  getMovies(): Observable<Movie[] | null> {
+  getMovies(): Observable<Movie[]> {
     return this.movies$.asObservable();
   }
 
-  getSpecies(): Observable<Species[] | null> {
+  getSpecies(): Observable<Species[]> {
     return this.species$.asObservable();
   }
 
-  getStarShips(): Observable<StarShip[] | null> {
+  getStarShips(): Observable<StarShip[]> {
     return this.starShips$.asObservable();
   }
 
   setHeroes(heroes: Hero[]): void {
-    if (this.heroes$.value !== null) {
-      this.heroes$.next([...this.heroes$.value, ...heroes]);
-    } else {
-      this.heroes$.next(heroes);
-    }
+    this.heroes$.next(heroes);
   }
 
   setMovies(movies: Movie[]): void {
@@ -43,19 +39,10 @@ export class StoreService {
   }
 
   setSpecies(species: Species[]): void {
-    if (this.species$.value) {
-      this.species$.next([...this.species$.value, ...species]);
-    } else {
-      this.species$.next(species);
-    }
+    this.species$.next(species);
   }
 
   setStarShips(starShips: StarShip[]): void {
-    if (this.starShips$.value) {
-      this.starShips$.next([...this.starShips$.value, ...starShips]);
-    } else {
-      this.starShips$.next(starShips);
-    }
-    console.log(this.starShips$.value);
+    this.starShips$.next(starShips);
   }
 }

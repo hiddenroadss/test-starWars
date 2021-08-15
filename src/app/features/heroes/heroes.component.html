@@ -25,7 +25,10 @@
         </div>
       </form>
     </div>
-    <app-card-list [items]="filteredHeroes"></app-card-list>
+    <app-card-list
+      [items]="filteredHeroes"
+      [onItemClick]="showHeroDetails"
+    ></app-card-list>
   </ng-container>
   <ng-template #spinner><div>AAA</div></ng-template>
 </div>

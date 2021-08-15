@@ -2,5 +2,10 @@
   <app-header></app-header>
 </header>
 <main>
-  <router-outlet></router-outlet>
+  <ng-container *ngIf="data$ | async; else loader">
+    <router-outlet></router-outlet>
+  </ng-container>
 </main>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
