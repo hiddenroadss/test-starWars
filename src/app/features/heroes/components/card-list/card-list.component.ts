@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Hero } from '@interfaces/Hero';
 
 @Component({
@@ -9,5 +10,10 @@ import { Hero } from '@interfaces/Hero';
 })
 export class CardListComponent {
   @Input() items: Hero[] = [];
-  @Input() onItemClick!: (hero: Hero) => void;
+
+  constructor(private router: Router) {}
+
+  showHeroDetails = (hero: Hero): void => {
+    this.router.navigate([hero.name.replace(/\s/, '_')]);
+  };
 }

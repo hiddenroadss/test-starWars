@@ -28,7 +28,6 @@
     <app-card-list
       *ngIf="heroes$ | async"
       [items]="filteredHeroes"
-      [onItemClick]="showHeroDetails"
     ></app-card-list>
   </ng-container>
   <ng-template #spinner><div>AAA</div></ng-template>

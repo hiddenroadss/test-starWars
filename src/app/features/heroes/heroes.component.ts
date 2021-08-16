@@ -107,8 +107,4 @@ export class HeroesComponent implements OnInit {
   get _species(): FormControl {
     return this.form.controls.species as FormControl;
   }
-
-  showHeroDetails = (hero: Hero): void => {
-    this.router.navigate([hero.name.replace(/\s/, '_')]);
-  };
 }
