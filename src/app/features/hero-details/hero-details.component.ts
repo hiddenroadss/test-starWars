@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Hero } from '@interfaces/Hero';
 import { StoreService } from '@services/store/store.service';
+import { from, Observable } from 'rxjs';
+import { filter, mergeMap, pluck, take, toArray } from 'rxjs/operators';
 
 @Component({
   selector: 'app-hero-details',
@@ -10,20 +12,43 @@ import { StoreService } from '@services/store/store.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroDetailsComponent implements OnInit {
-  hero!: Hero;
-  speciesNames: string[] = [];
-  moviesNames: string[] = [];
-  starShipsNames: string[] = [];
-  constructor(private router: Router, private storeService: StoreService) {
-    const currentRoot = this.router.getCurrentNavigation();
-    if (!currentRoot || !currentRoot.extras.state) {
+  hero: Hero | undefined;
+  speciesNames$: Observable<string[]>;
+  moviesNames$: Observable<string[]>;
+  starShipsNames$: Observable<string[]>;
+  constructor(
+    private route: ActivatedRoute,
+    private storeService: StoreService,
+    private router: Router
+  ) {
+    let name = route.snapshot.paramMap.get('name')!;
+    name = name?.replace(/_/, ' ');
+    this.hero = this.storeService.getOneHero(name!);
+    if (!this.hero) {
       this.router.navigate(['/']);
-    } else {
-      this.hero = currentRoot.extras.state?.hero as Hero;
-      this.speciesNames = currentRoot.extras.state.speciesNames;
-      this.moviesNames = currentRoot.extras.state.moviesNames;
-      this.starShipsNames = currentRoot.extras.state.starShipsNames;
     }
+    this.moviesNames$ = this.storeService.getMovies().pipe(
+      take(1),
+      mergeMap((value) => from(value)),
+      filter((item) => this.hero!.films.includes(item.url)),
+      pluck('title'),
+      toArray()
+    );
+    this.speciesNames$ = this.storeService.getSpecies().pipe(
+      take(1),
+      mergeMap((value) => from(value)),
+      filter((item) => this.hero!.species.includes(item.url)),
+      pluck('name'),
+      toArray()
+    );
+    this.starShipsNames$ = this.storeService.getStarShips().pipe(
+      take(1),
+
+      mergeMap((value) => from(value)),
+      filter((item) => this.hero!.starships.includes(item.url)),
+      pluck('name'),
+      toArray()
+    );
   }
 
   ngOnInit(): void {}

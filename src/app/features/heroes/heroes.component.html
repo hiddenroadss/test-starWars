@@ -2,14 +2,14 @@
   <ng-container *ngIf="true">
     <div class="heroes__filtering">
       <form [formGroup]="form" class="heroes__form">
-        <div>
+        <div *ngIf="moviesNames$ | async as moviesNames">
           <p>Movie</p>
           <app-dropdown
             formControlName="movie"
-            [options]="moviesTitles"
+            [options]="moviesNames"
           ></app-dropdown>
         </div>
-        <div>
+        <div *ngIf="speciesNames$ | async as speciesNames">
           <p>Species</p>
           <app-dropdown
             formControlName="species"
@@ -26,6 +26,7 @@
       </form>
     </div>
     <app-card-list
+      *ngIf="heroes$ | async"
       [items]="filteredHeroes"
       [onItemClick]="showHeroDetails"
     ></app-card-list>

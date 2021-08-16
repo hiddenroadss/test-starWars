@@ -1,17 +1,13 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Hero } from '@interfaces/Hero';
 import { Router } from '@angular/router';
 import { Movie } from 'src/app/shared/interfaces/Movie';
 import { StoreService } from 'src/app/shared/services/store/store.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Species } from '@interfaces/Species';
 import { StarShip } from '@interfaces/StarShip';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { Species } from '@interfaces/Species';
 
 @Component({
   selector: 'app-heroes',
@@ -20,25 +16,21 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroesComponent implements OnInit {
+  heroes$: Observable<Hero[]>;
   heroes: Hero[] = [];
   filteredHeroes: Hero[] = [];
   movies: Movie[] = [];
-  moviesTitles: string[] = [];
+  moviesNames$: Observable<string[]>;
   species: Species[] = [];
-  speciesNames: string[] = [];
-  starShips: StarShip[] = [];
+  speciesNames$: Observable<string[]>;
   form: FormGroup;
-
-  subscription1: Subscription;
-  subscription2: Subscription;
-  subscription3: Subscription;
-  subscription4: Subscription;
+  moviesSub: Subscription;
+  speciesSub: Subscription;
 
   constructor(
     private router: Router,
     private storeService: StoreService,
-    private fb: FormBuilder,
-    private cd: ChangeDetectorRef
+    private fb: FormBuilder
   ) {
     this.form = this.fb.group({
       movie: [''],
@@ -46,24 +38,20 @@ export class HeroesComponent implements OnInit {
       from: [''],
       to: [''],
     });
-    this.subscription1 = this.storeService.getSpecies().subscribe((value) => {
-      this.species = value;
-      this.speciesNames = this.species.map((item) => item.name);
-    });
-    this.subscription2 = this.storeService.getHeroes().subscribe((value) => {
-      this.heroes = value;
-      this.filteredHeroes = value;
-      this.cd.markForCheck();
-    });
-    this.subscription3 = this.storeService.getMovies().subscribe((value) => {
-      this.movies = value;
-      this.moviesTitles = this.movies.map((item) => {
-        return item.title;
-      });
-    });
-    this.subscription4 = this.storeService.getStarShips().subscribe((value) => {
-      this.starShips = value;
-    });
+    this.speciesNames$ = this.storeService.getSpeciesNames();
+    this.heroes$ = this.storeService.getHeroes().pipe(
+      tap((value) => {
+        this.heroes = value;
+        this.filteredHeroes = value;
+      })
+    );
+    this.moviesNames$ = this.storeService.getMoviesNames();
+    this.moviesSub = this.storeService
+      .getMovies()
+      .subscribe((value) => (this.movies = value));
+    this.speciesSub = this.storeService
+      .getSpecies()
+      .subscribe((value) => (this.species = value));
   }
 
   ngOnInit(): void {
@@ -104,17 +92,11 @@ export class HeroesComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    if (this.subscription1) {
-      this.subscription1.unsubscribe();
+    if (this.moviesSub) {
+      this.moviesSub.unsubscribe();
     }
-    if (this.subscription2) {
-      this.subscription2.unsubscribe();
-    }
-    if (this.subscription3) {
-      this.subscription3.unsubscribe();
-    }
-    if (this.subscription4) {
-      this.subscription4.unsubscribe();
+    if (this.speciesSub) {
+      this.speciesSub.unsubscribe();
     }
   }
 
@@ -127,17 +109,6 @@ export class HeroesComponent implements OnInit {
   }
 
   showHeroDetails = (hero: Hero): void => {
-    const speciesNames = this.species
-      .filter((item) => hero.species.includes(item.url))
-      .map((item) => item.name);
-    const moviesNames = this.movies
-      .filter((item) => hero.films.includes(item.url))
-      .map((item) => item.title);
-    const starShipsNames = this.starShips
-      .filter((item) => hero.starships.includes(item.url))
-      .map((item) => item.name);
-    this.router.navigate([hero.name.replace(/\s/, '')], {
-      state: { hero, speciesNames, moviesNames, starShipsNames },
-    });
+    this.router.navigate([hero.name.replace(/\s/, '_')]);
   };
 }

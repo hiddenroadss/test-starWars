@@ -13,19 +13,23 @@
       <div class="description__info">
         <p>
           Species:
-          <ng-container *ngIf="speciesNames.length; else void">
+          <ng-container
+            *ngIf="speciesNames$ | async as speciesNames; else void"
+          >
             <span *ngFor="let species of speciesNames">{{ species }}, </span>
           </ng-container>
         </p>
         <p>
           Movies:
-          <ng-container *ngIf="moviesNames.length; else void">
+          <ng-container *ngIf="moviesNames$ | async as moviesNames; else void">
             <span *ngFor="let movie of moviesNames">{{ movie }}, </span>
           </ng-container>
         </p>
         <p>
           Spaceships:
-          <ng-container *ngIf="starShipsNames.length; else void">
+          <ng-container
+            *ngIf="starShipsNames$ | async as starShipsNames; else void"
+          >
             <span *ngFor="let starShip of starShipsNames"
               >{{ starShip }},
             </span>
@@ -38,7 +42,13 @@
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, voluptates
     iusto! Ipsa laudantium cum inventore reiciendis molestiae blanditiis id
     ducimus similique quis tempore doloribus, quos quo debitis obcaecati nihil
-    itaque.
+    itaque. Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque,
+    voluptates iusto! Ipsa laudantium cum inventore reiciendis molestiae
+    blanditiis id ducimus similique quis tempore doloribus, quos quo debitis
+    obcaecati nihil itaque. Lorem ipsum dolor sit amet consectetur adipisicing
+    elit. Eaque, voluptates iusto! Ipsa laudantium cum inventore reiciendis
+    molestiae blanditiis id ducimus similique quis tempore doloribus, quos quo
+    debitis obcaecati nihil itaque.
   </div>
 </div>
 <ng-template #void><span>-</span></ng-template>

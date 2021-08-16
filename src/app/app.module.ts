@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderModule } from 'src/app/core/components/header/header.module';
-import { NotificationService } from '@services/notification/notification.service';
 import { LoaderModule } from './core/components/loader/loader.module';
+import { HttpErrorInterceptor } from './core/interceptors/http-error-interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,7 +17,9 @@ import { LoaderModule } from './core/components/loader/loader.module';
     HeaderModule,
     LoaderModule,
   ],
-  providers: [{ provide: NotificationService, useClass: NotificationService }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
