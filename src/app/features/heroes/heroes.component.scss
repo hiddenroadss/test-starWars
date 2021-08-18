@@ -1,6 +1,7 @@
 .heroes {
   &__form {
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 20px;
     & > *:not(:last-child) {
       margin-right: 20px;

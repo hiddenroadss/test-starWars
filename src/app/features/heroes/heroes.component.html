@@ -1,34 +1,31 @@
 <div class="container">
-  <ng-container *ngIf="true">
-    <div class="heroes__filtering">
-      <form [formGroup]="form" class="heroes__form">
-        <div *ngIf="moviesNames$ | async as moviesNames">
-          <p>Movie</p>
-          <app-dropdown
-            formControlName="movie"
-            [options]="moviesNames"
-          ></app-dropdown>
-        </div>
-        <div *ngIf="speciesNames$ | async as speciesNames">
-          <p>Species</p>
-          <app-dropdown
-            formControlName="species"
-            [options]="speciesNames"
-          ></app-dropdown>
-        </div>
-        <div>
-          <p>Birth Date</p>
-          <input type="number" formControlName="from" />
-          <span> - </span>
-          <input type="number" formControlName="to" />
-          <span>BBY</span>
-        </div>
-      </form>
-    </div>
-    <app-card-list
-      *ngIf="heroes$ | async"
-      [items]="filteredHeroes"
-    ></app-card-list>
-  </ng-container>
-  <ng-template #spinner><div>AAA</div></ng-template>
+  <div class="heroes__filtering">
+    <form [formGroup]="form" class="heroes__form">
+      <div *ngIf="moviesNames$ | async as moviesNames">
+        <p>Movie</p>
+        <app-dropdown
+          formControlName="movie"
+          [options]="moviesNames"
+        ></app-dropdown>
+      </div>
+      <div *ngIf="speciesNames$ | async as speciesNames">
+        <p>Species</p>
+        <app-dropdown
+          formControlName="species"
+          [options]="speciesNames"
+        ></app-dropdown>
+      </div>
+      <div>
+        <p>Birth Date</p>
+        <input type="number" formControlName="from" />
+        <span> - </span>
+        <input type="number" formControlName="to" />
+        <span>BBY</span>
+      </div>
+    </form>
+  </div>
+  <app-card-list
+    *ngIf="heroes$ | async"
+    [items]="filteredHeroes"
+  ></app-card-list>
 </div>
